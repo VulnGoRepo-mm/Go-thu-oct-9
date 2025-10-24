@@ -1,40 +1,40 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: hackers-organized
-  labels:
-    app: hackers-organized
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: hackers-organized
-  template:
-    metadata:
-      name: hackers-organized
-      labels:
-        app: hackers-organized
-    spec:
-      containers:
-        - name: hackers-organized
-          image: ldonleycb/hackers-organized
-          imagePullPolicy: Always
-          envFrom:
-            - configMapRef:
-                name: ho-cm
-          ports:
-            - containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 10
-            periodSeconds: 30
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 5
-            periodSeconds: 15
-      restartPolicy: Always
+# apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+ # name: hackers-organized
+  #labels:
+    #app: hackers-organized
+#spec:
+  #replicas: 1
+  #selector:
+   # matchLabels:
+   #   app: hackers-organized
+  #template:
+   # metadata:
+      #name: hackers-organized
+      #labels:
+       # app: hackers-organized
+    #spec:
+     # containers:
+     #   - name: hackers-organized
+     #     image: ldonleycb/hackers-organized
+     #     imagePullPolicy: Always
+     #     envFrom:
+     #       - configMapRef:
+      #          name: ho-cm
+      #    ports:
+       #     - containerPort: 80
+      #        protocol: TCP
+       #   livenessProbe:
+       #     httpGet:
+       #       path: /
+         #     port: 80
+         #   initialDelaySeconds: 10
+        #    periodSeconds: 30
+         # readinessProbe:
+         #   httpGet:
+         #     path: /
+         #     port: 80
+         #   initialDelaySeconds: 5
+         #   periodSeconds: 15
+      #restartPolicy: Always
