@@ -40,3 +40,9 @@ jobs:
           file-type: BINARY_CONTAINER
           debug: "true"
           alias: 020229604682.dkr.ecr.us-east-1.amazonaws.com/throwaway/actions/vulnerable-image:go-0.111
+      - id: record-deployment
+        name: Record deployment to ecr-qa
+        uses: cloudbees-io/register-deployed-artifact@v2
+        with:
+          artifact-id: ${{ steps.register-artifact.outputs.artifact-id }}
+          target-environment: b413b2da-8da9-4a6b-990f-717c555685b1
