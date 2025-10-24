@@ -12,9 +12,6 @@ It is helpful to have a go-to app for demoing new tools - this is mine. It's nic
 
 > Oct 16, 2025: lightweight README touch-up to re-trigger the component workflow for remediation validation runs.
 
-## Temporary test secret
-
-AWS_SECRET_ACCESS_KEY=FAKESECRET1234567890FORTESTING
 
 ## Tech info
 
