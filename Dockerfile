@@ -1,6 +1,6 @@
 FROM node:lts AS builder
 WORKDIR /app
-RUN apt update && apt install jq -y
+# RUN apt update && apt install jq -y
 COPY package*.json ./
 RUN npm ci
 COPY . .
