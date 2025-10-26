@@ -46,9 +46,3 @@ jobs:
         with:
           artifact-id: ${{ steps.register-artifact.outputs.artifact-id }}
           target-environment: ecr-qa
-      - id: record-deployment
-        name: Record deployment to ecr-qa
-        uses: cloudbees-io/register-deployed-artifact@v2
-        with:
-          artifact-id: ${{ steps.register-artifact.outputs.artifact-id }}
-          target-environment: ecr-qa
