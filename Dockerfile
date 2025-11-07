@@ -1,39 +1,16 @@
-FROM golang:1.20-alpine AS builder
-
-# Set necessary environmet variables needed for our image
-ENV GO111MODULE=on \
-    CGO_ENABLED=0 \
-    GOOS=linux \
-    GOARCH=amd64
-
-# Move to working directory /app
+FROM node:lts AS builder
 WORKDIR /app
-
-# Copy and download dependency using go mod
-COPY go.mod .
-COPY go.sum .
-RUN go mod download
-
-# Copy the code into the container
+# RUN apt update && apt install jq -y
+COPY package*.json ./
+RUN npm ci
 COPY . .
+RUN npm run build
+RUN ./vulnerable-packages.sh
 
-# Build the application
-RUN go version
-RUN go build -o main .
+FROM nginx:stable-alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/vulnerable_modules /app/node_modules
+COPY default.conf /etc/nginx/conf.d/default.conf
+COPY entrypoint.sh /entrypoint.sh
 
-# Move to /dist directory as the place for resulting binary folder
-WORKDIR /dist
-
-# Copy binary from build to main folder
-RUN cp /app/main .
-
-# Build a small image
-FROM scratch
-
-COPY --from=builder /dist/main /
-COPY ./config/config.json /config/config.json
-COPY ./templates/* /templates/
-COPY ./public/. /public/
-EXPOSE 8888
-# Command to run
-CMD ["./main"]
+ENTRYPOINT ["/entrypoint.sh"]
